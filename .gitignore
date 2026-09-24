@@ -1,0 +1,45 @@
+# Environment / secrets
+.env
+.env.*
+!.env.example
+
+# Python
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Python build metadata
+*.egg-info/
+
+# Node
+node_modules/
+.next/
+out/
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+
+# Local databases
+*.db
+*.sqlite
+*.sqlite3
+
+# TaxTrace local document vault
+storage_vault/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Build / coverage
+dist/
+build/
+coverage/
