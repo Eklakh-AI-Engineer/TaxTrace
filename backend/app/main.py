@@ -21,17 +21,21 @@ from app.api.health import router as health_router
 from app.api.notices import router as notices_router
 from app.api.periods import router as periods_router
 from app.api.reconciliations import router as reconciliations_router
+from app.api.retention import router as retention_router
 from app.api.tasks import router as tasks_router
 from app.api.users import router as users_router
 from app.api.webhooks import router as webhooks_router
-
 
 from slowapi import Limiter, _rate_limit_exceeded_handler
 from slowapi.util import get_remote_address
 from slowapi.errors import RateLimitExceeded
 
+from app.config import settings
+from app.observability.metrics import MetricsMiddleware, metrics_endpoint
+from app.security.middleware import setup_security_middleware
+
 # ---------------------------------------------------------------------------
-# Rate Limiting
+# Rate Limiting (legacy slowapi for backward compatibility)
 # ---------------------------------------------------------------------------
 
 limiter = Limiter(key_func=get_remote_address, default_limits=["200/minute"])
@@ -44,10 +48,23 @@ app = FastAPI(
     title="TaxTrace",
     description="AI Compliance Execution Platform for Small Indian CA Firms",
     version="0.1.0",
+    docs_url="/docs" if settings.app_env != "production" else None,
+    redoc_url="/redoc" if settings.app_env != "production" else None,
 )
 app.state.limiter = limiter
 app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
+# ---------------------------------------------------------------------------
+# Security Middleware
+# ---------------------------------------------------------------------------
+
+setup_security_middleware(app)
+
+# ---------------------------------------------------------------------------
+# Observability: Metrics Middleware
+# ---------------------------------------------------------------------------
+
+app.add_middleware(MetricsMiddleware)
 
 # ---------------------------------------------------------------------------
 # Middleware: Request-ID tracking
@@ -133,6 +150,14 @@ app.include_router(tasks_router)
 app.include_router(dashboard_router)
 app.include_router(users_router)
 app.include_router(webhooks_router)
+app.include_router(retention_router)
+
+
+# ---------------------------------------------------------------------------
+# Observability: Metrics Endpoint
+# ---------------------------------------------------------------------------
+
+app.add_route("/metrics", metrics_endpoint, methods=["GET"])
 
 
 # ---------------------------------------------------------------------------

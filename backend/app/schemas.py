@@ -492,6 +492,37 @@ class MessageDraftResponse(BaseModel):
 
 
 # ---------------------------------------------------------------------------
+# Retention & Deletion schemas
+# ---------------------------------------------------------------------------
+
+
+class RetentionPolicyRead(BaseModel):
+    policies: dict[str, int]
+
+
+class RetentionPolicyExecuteRequest(BaseModel):
+    policies: Optional[dict[str, int]] = None
+    dry_run: bool = True
+
+
+class RetentionPolicyExecuteResponse(BaseModel):
+    dry_run: bool
+    results: dict[str, int]
+    executed_at: datetime
+
+
+class SoftDeleteRequest(BaseModel):
+    reason: Optional[str] = Field(default=None, max_length=500)
+
+
+class SoftDeleteResponse(BaseModel):
+    entity_type: str
+    entity_id: str
+    status: str
+    deleted_at: datetime
+
+
+# ---------------------------------------------------------------------------
 # Partner Monitoring Dashboard schemas
 # ---------------------------------------------------------------------------
 
