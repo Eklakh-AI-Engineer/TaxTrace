@@ -27,7 +27,7 @@ from app.schemas import (
     DraftRead,
     NoticeExtractionResponse,
 )
-from app.services import audit_service, document_service
+from app.services import audit_service, document_service, retrieval_service
 from app.storage.backend import get_storage_backend
 
 
@@ -209,12 +209,27 @@ def generate_notice_draft(
         for e in evidence_items
     ]
 
+    # Retrieve official knowledge from RAG pipeline
+    query = f"Notice type: {notice.notice_type} regarding {payload.instructions}"
+    # In production, we might extract exact sections from evidence and search those directly.
+    knowledge_results = retrieval_service.search_knowledge_base(
+        db,
+        tenant_id=auth.tenant_id,
+        query=query,
+        limit=3
+    )
+    official_knowledge = [
+        {"title": k["title"], "section": k["section"], "content": k["content"]}
+        for k in knowledge_results
+    ]
+
     user_prompt = (
         f"NOTICE TYPE: {notice.notice_type}\n"
         f"REFERENCE NUMBER: {notice.reference_number}\n"
         f"DEADLINE: {notice.response_deadline}\n"
         f"INSTRUCTIONS: {payload.instructions}\n\n"
-        f"VERIFIED EVIDENCE:\n{evidence_context}\n"
+        f"VERIFIED EVIDENCE:\n{evidence_context}\n\n"
+        f"OFFICIAL TAX KNOWLEDGE:\n{official_knowledge}\n"
     )
 
     provider = get_ai_provider()

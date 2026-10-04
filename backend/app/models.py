@@ -10,12 +10,15 @@ from sqlalchemy import (
     DateTime,
     ForeignKey,
     Numeric,
+    Integer,
     PrimaryKeyConstraint,
     String,
     Text,
     func,
 )
+from typing import Any
 from sqlalchemy.orm import Mapped, mapped_column, relationship
+from pgvector.sqlalchemy import Vector
 
 from app.database import Base
 
@@ -280,3 +283,18 @@ class AuditEvent(Base):
     event_type: Mapped[str] = mapped_column(String(100), nullable=False)
     payload_json: Mapped[dict | None] = mapped_column(JSON, nullable=True)
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now(), nullable=False)
+
+
+class KnowledgeChunk(Base):
+    __tablename__ = "knowledge_chunks"
+
+    id: Mapped[str] = mapped_column(String(36), primary_key=True, default=lambda: str(uuid.uuid4()))
+    source_id: Mapped[str] = mapped_column(ForeignKey("knowledge_sources.id"), nullable=False)
+    tenant_id: Mapped[str] = mapped_column(String(36), nullable=False)
+    chunk_index: Mapped[int] = mapped_column(Integer, nullable=False)
+    content: Mapped[str] = mapped_column(Text, nullable=False)
+    section_reference: Mapped[str | None] = mapped_column(String(100), nullable=True)
+    embedding: Mapped[Any | None] = mapped_column(Vector(384), nullable=True)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now(), nullable=False)
+    
+    source: Mapped["KnowledgeSource"] = relationship()

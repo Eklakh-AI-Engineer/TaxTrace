@@ -13,16 +13,32 @@ from typing import Any
 
 
 class AIProvider(ABC):
-    """Abstract interface for LLM completions."""
+    """Abstract interface for LLM completions and embeddings."""
 
     @abstractmethod
     def generate(self, system_prompt: str, user_prompt: str, temperature: float = 0.0) -> str:
         """Generate response text given system instructions and user context."""
         pass
 
+    @abstractmethod
+    def embed(self, text: str) -> list[float]:
+        """Generate a dense vector embedding for the given text."""
+        pass
+
 
 class LocalMockAIProvider(AIProvider):
     """Deterministic mock provider generating grounded answers based on evidence."""
+
+    def embed(self, text: str) -> list[float]:
+        """Return a deterministic mock embedding of size 384 based on string hash."""
+        import hashlib
+        h = int(hashlib.md5(text.encode("utf-8")).hexdigest(), 16)
+        # Generate a predictable vector based on hash
+        vector = []
+        for i in range(384):
+            val = ((h >> (i % 64)) & 0xFF) / 255.0
+            vector.append(val - 0.5)  # zero mean
+        return vector
 
     def generate(self, system_prompt: str, user_prompt: str, temperature: float = 0.0) -> str:
         prompt_lower = user_prompt.lower()

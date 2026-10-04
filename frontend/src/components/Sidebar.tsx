@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { Home, FileText, AlertTriangle, FileWarning, CheckSquare, Search, Shield, Settings } from 'lucide-react';
+import { Home, FileText, AlertTriangle, FileWarning, CheckSquare, Search, Shield, Settings, MessageCircle } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { usePathname } from 'next/navigation';
 
@@ -13,6 +13,7 @@ const navItems = [
   { name: 'Notices', href: '/notices', icon: FileWarning },
   { name: 'Tasks', href: '/tasks', icon: CheckSquare },
   { name: 'Knowledge', href: '/knowledge', icon: Shield },
+  { name: 'Chat Simulator', href: '/chat', icon: MessageCircle },
   { name: 'Settings', href: '/settings', icon: Settings },
 ];
 

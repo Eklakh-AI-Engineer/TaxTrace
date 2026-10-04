@@ -25,6 +25,9 @@ from app.schemas import (
     ReconciliationSummary,
 )
 from app.services import audit_service
+import csv
+import io
+from datetime import datetime
 
 
 def run_reconciliation(
@@ -381,3 +384,133 @@ def update_exception(
     db.commit()
     db.refresh(exc)
     return exc, evidence
+
+
+def export_reconciliation_report(
+    db: Session,
+    *,
+    auth: AuthContext,
+    period_id: str,
+    format: str = "csv",
+) -> tuple[bytes, str]:
+    """Export reconciliation report as CSV or XLSX."""
+    # Validate period belongs to tenant
+    period = (
+        db.query(Period)
+        .filter(Period.id == period_id, Period.tenant_id == auth.tenant_id)
+        .first()
+    )
+    if period is None:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Period not found in this tenant.",
+        )
+
+    # Get all exceptions for the period
+    exceptions = (
+        db.query(ExceptionRecord)
+        .filter(
+            ExceptionRecord.period_id == period_id,
+            ExceptionRecord.tenant_id == auth.tenant_id,
+        )
+        .order_by(ExceptionRecord.created_at.asc())
+        .all()
+    )
+
+    # Get matches for matched records
+    matches = (
+        db.query(Match)
+        .filter(
+            Match.period_id == period_id,
+            Match.tenant_id == auth.tenant_id,
+        )
+        .all()
+    )
+    match_map = {m.id: m for m in matches}
+
+    # Prepare CSV data
+    output = io.StringIO()
+    writer = csv.writer(output)
+    
+    # Header row
+    writer.writerow([
+        "Exception ID",
+        "Type",
+        "Severity",
+        "Status",
+        "Reason Code",
+        "System Explanation",
+        "Book Invoice Number",
+        "Book Supplier GSTIN",
+        "Book Taxable Value",
+        "Book CGST",
+        "Book SGST",
+        "Book IGST",
+        "Book CESS",
+        "Portal Invoice Number",
+        "Portal Supplier GSTIN",
+        "Portal Taxable Value",
+        "Portal CGST",
+        "Portal SGST",
+        "Portal IGST",
+        "Portal CESS",
+        "Match Score",
+        "Match Status",
+        "Rule Version",
+        "Evidence References",
+        "Created At",
+        "Updated At",
+    ])
+
+    for exc in exceptions:
+        match = match_map.get(exc.match_id) if exc.match_id else None
+        book_tx = match.book_transaction if match and match.book_transaction_id else None
+        portal_tx = match.portal_transaction if match and match.portal_transaction_id else None
+
+        # Get evidence references
+        evidence_list = (
+            db.query(Evidence)
+            .filter(
+                Evidence.exception_id == exc.id,
+                Evidence.tenant_id == auth.tenant_id,
+            )
+            .all()
+        )
+        evidence_refs = "; ".join([
+            f"{e.evidence_type}:{e.source_row_reference or e.id}"
+            for e in evidence_list
+        ])
+
+        writer.writerow([
+            exc.id,
+            exc.type,
+            exc.severity,
+            exc.status,
+            exc.reason_code or "",
+            exc.explanation or "",
+            book_tx.invoice_number_raw if book_tx else "",
+            book_tx.supplier_gstin if book_tx else "",
+            str(book_tx.taxable_value) if book_tx and book_tx.taxable_value else "",
+            str(book_tx.cgst) if book_tx and book_tx.cgst else "",
+            str(book_tx.sgst) if book_tx and book_tx.sgst else "",
+            str(book_tx.igst) if book_tx and book_tx.igst else "",
+            str(book_tx.cess) if book_tx and book_tx.cess else "",
+            portal_tx.invoice_number_raw if portal_tx else "",
+            portal_tx.supplier_gstin if portal_tx else "",
+            str(portal_tx.taxable_value) if portal_tx and portal_tx.taxable_value else "",
+            str(portal_tx.cgst) if portal_tx and portal_tx.cgst else "",
+            str(portal_tx.sgst) if portal_tx and portal_tx.sgst else "",
+            str(portal_tx.igst) if portal_tx and portal_tx.igst else "",
+            str(portal_tx.cess) if portal_tx and portal_tx.cess else "",
+            str(match.match_score) if match and match.match_score else "",
+            match.status if match else "",
+            match.rule_version if match else "",
+            evidence_refs,
+            exc.created_at.isoformat() if exc.created_at else "",
+            exc.updated_at.isoformat() if exc.updated_at else "",
+        ])
+
+    csv_bytes = output.getvalue().encode('utf-8')
+    filename = f"reconciliation_report_{period_id}_{datetime.now().strftime('%Y%m%d_%H%M%S')}.csv"
+    
+    return csv_bytes, filename

@@ -23,7 +23,18 @@ from app.api.periods import router as periods_router
 from app.api.reconciliations import router as reconciliations_router
 from app.api.tasks import router as tasks_router
 from app.api.users import router as users_router
+from app.api.webhooks import router as webhooks_router
 
+
+from slowapi import Limiter, _rate_limit_exceeded_handler
+from slowapi.util import get_remote_address
+from slowapi.errors import RateLimitExceeded
+
+# ---------------------------------------------------------------------------
+# Rate Limiting
+# ---------------------------------------------------------------------------
+
+limiter = Limiter(key_func=get_remote_address, default_limits=["200/minute"])
 
 # ---------------------------------------------------------------------------
 # Application
@@ -34,6 +45,8 @@ app = FastAPI(
     description="AI Compliance Execution Platform for Small Indian CA Firms",
     version="0.1.0",
 )
+app.state.limiter = limiter
+app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
 
 # ---------------------------------------------------------------------------
@@ -119,6 +132,7 @@ app.include_router(drafts_router)
 app.include_router(tasks_router)
 app.include_router(dashboard_router)
 app.include_router(users_router)
+app.include_router(webhooks_router)
 
 
 # ---------------------------------------------------------------------------

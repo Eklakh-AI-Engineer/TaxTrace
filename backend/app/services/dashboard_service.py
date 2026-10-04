@@ -16,6 +16,7 @@ from app.models import ExceptionRecord, NoticeCase, Task
 from app.schemas import (
     DashboardExceptionMetric,
     DashboardNoticeMetric,
+    DashboardOperationalMetric,
     DashboardOverviewResponse,
     DashboardTaskMetric,
     TaskRead,
@@ -86,11 +87,39 @@ def get_dashboard_overview(
         urgent_deadlines_within_7_days=urgent_deadlines,
     )
 
+    from app.models import AuditEvent, Match
+    
+    # 4. Operational metrics
+    ai_drafts = db.query(AuditEvent).filter(
+        AuditEvent.tenant_id == auth.tenant_id,
+        AuditEvent.event_type.in_(["notice_draft_generated", "exception_explanation_generated"])
+    ).count()
+
+    manual_overrides = db.query(AuditEvent).filter(
+        AuditEvent.tenant_id == auth.tenant_id,
+        AuditEvent.event_type == "exception_overridden"
+    ).count()
+
+    matched_txns = db.query(Match).filter(
+        Match.tenant_id == auth.tenant_id,
+        Match.status == "accepted"
+    ).count()
+    
+    # Assumption: 3 minutes saved per matched transaction
+    hours_saved = matched_txns * (3 / 60)
+    
+    ops_metrics = DashboardOperationalMetric(
+        estimated_hours_saved=round(hours_saved, 1),
+        manual_overrides=manual_overrides,
+        ai_drafts_generated=ai_drafts
+    )
+
     return DashboardOverviewResponse(
         firm_id=auth.firm_id,
         generated_at=datetime.now(timezone.utc),
         tasks=task_metrics,
         exceptions=exc_metrics,
         notices=notice_metrics,
+        operations=ops_metrics,
         overdue_task_items=[TaskRead.model_validate(t) for t in overdue_items],
     )

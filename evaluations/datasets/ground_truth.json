@@ -1,0 +1,802 @@
+[
+  {
+    "invoice": "INV-2026-0000",
+    "expected_status": "value_mismatch"
+  },
+  {
+    "invoice": "INV-2026-0001",
+    "expected_status": "matched"
+  },
+  {
+    "invoice": "INV-2026-0002",
+    "expected_status": "missing_in_2b"
+  },
+  {
+    "invoice": "INV-2026-0003",
+    "expected_status": "matched"
+  },
+  {
+    "invoice": "INV-2026-0004",
+    "expected_status": "matched"
+  },
+  {
+    "invoice": "INV-2026-0005",
+    "expected_status": "matched"
+  },
+  {
+    "invoice": "INV-2026-0006",
+    "expected_status": "matched"
+  },
+  {
+    "invoice": "INV-2026-0007",
+    "expected_status": "missing_in_2b"
+  },
+  {
+    "invoice": "INV-2026-0008",
+    "expected_status": "matched"
+  },
+  {
+    "invoice": "INV-2026-0009",
+    "expected_status": "value_mismatch"
+  },
+  {
+    "invoice": "INV-2026-0010",
+    "expected_status": "missing_in_2b"
+  },
+  {
+    "invoice": "INV-2026-0011",
+    "expected_status": "matched"
+  },
+  {
+    "invoice": "INV-2026-0012",
+    "expected_status": "matched"
+  },
+  {
+    "invoice": "INV-2026-0013",
+    "expected_status": "matched"
+  },
+  {
+    "invoice": "INV-2026-0014",
+    "expected_status": "matched"
+  },
+  {
+    "invoice": "INV-2026-0015",
+    "expected_status": "matched"
+  },
+  {
+    "invoice": "INV-2026-0016",
+    "expected_status": "matched"
+  },
+  {
+    "invoice": "INV-2026-0017",
+    "expected_status": "matched"
+  },
+  {
+    "invoice": "INV-2026-0018",
+    "expected_status": "matched"
+  },
+  {
+    "invoice": "INV-2026-0019",
+    "expected_status": "matched"
+  },
+  {
+    "invoice": "INV-2026-0020",
+    "expected_status": "matched"
+  },
+  {
+    "invoice": "INV-2026-0021",
+    "expected_status": "matched"
+  },
+  {
+    "invoice": "INV-2026-0022",
+    "expected_status": "value_mismatch"
+  },
+  {
+    "invoice": "INV-2026-0023",
+    "expected_status": "matched"
+  },
+  {
+    "invoice": "INV-2026-0024",
+    "expected_status": "missing_in_2b"
+  },
+  {
+    "invoice": "INV-2026-0025",
+    "expected_status": "value_mismatch"
+  },
+  {
+    "invoice": "INV-2026-0026",
+    "expected_status": "matched"
+  },
+  {
+    "invoice": "INV-2026-0027",
+    "expected_status": "matched"
+  },
+  {
+    "invoice": "INV-2026-0028",
+    "expected_status": "matched"
+  },
+  {
+    "invoice": "INV-2026-0029",
+    "expected_status": "fuzzy_match"
+  },
+  {
+    "invoice": "INV-2026-0030",
+    "expected_status": "matched"
+  },
+  {
+    "invoice": "INV-2026-0031",
+    "expected_status": "matched"
+  },
+  {
+    "invoice": "INV-2026-0032",
+    "expected_status": "matched"
+  },
+  {
+    "invoice": "INV-2026-0033",
+    "expected_status": "matched"
+  },
+  {
+    "invoice": "INV-2026-0034",
+    "expected_status": "matched"
+  },
+  {
+    "invoice": "INV-2026-0035",
+    "expected_status": "matched"
+  },
+  {
+    "invoice": "INV-2026-0036",
+    "expected_status": "matched"
+  },
+  {
+    "invoice": "INV-2026-0037",
+    "expected_status": "value_mismatch"
+  },
+  {
+    "invoice": "INV-2026-0038",
+    "expected_status": "matched"
+  },
+  {
+    "invoice": "INV-2026-0039",
+    "expected_status": "matched"
+  },
+  {
+    "invoice": "INV-2026-0040",
+    "expected_status": "matched"
+  },
+  {
+    "invoice": "INV-2026-0041",
+    "expected_status": "matched"
+  },
+  {
+    "invoice": "INV-2026-0042",
+    "expected_status": "matched"
+  },
+  {
+    "invoice": "INV-2026-0043",
+    "expected_status": "matched"
+  },
+  {
+    "invoice": "INV-2026-0044",
+    "expected_status": "value_mismatch"
+  },
+  {
+    "invoice": "INV-2026-0045",
+    "expected_status": "matched"
+  },
+  {
+    "invoice": "INV-2026-0046",
+    "expected_status": "missing_in_2b"
+  },
+  {
+    "invoice": "INV-2026-0047",
+    "expected_status": "fuzzy_match"
+  },
+  {
+    "invoice": "INV-2026-0048",
+    "expected_status": "matched"
+  },
+  {
+    "invoice": "INV-2026-0049",
+    "expected_status": "matched"
+  },
+  {
+    "invoice": "INV-2026-0050",
+    "expected_status": "fuzzy_match"
+  },
+  {
+    "invoice": "INV-2026-0051",
+    "expected_status": "matched"
+  },
+  {
+    "invoice": "INV-2026-0052",
+    "expected_status": "matched"
+  },
+  {
+    "invoice": "INV-2026-0053",
+    "expected_status": "fuzzy_match"
+  },
+  {
+    "invoice": "INV-2026-0054",
+    "expected_status": "matched"
+  },
+  {
+    "invoice": "INV-2026-0055",
+    "expected_status": "matched"
+  },
+  {
+    "invoice": "INV-2026-0056",
+    "expected_status": "matched"
+  },
+  {
+    "invoice": "INV-2026-0057",
+    "expected_status": "matched"
+  },
+  {
+    "invoice": "INV-2026-0058",
+    "expected_status": "matched"
+  },
+  {
+    "invoice": "INV-2026-0059",
+    "expected_status": "matched"
+  },
+  {
+    "invoice": "INV-2026-0060",
+    "expected_status": "fuzzy_match"
+  },
+  {
+    "invoice": "INV-2026-0061",
+    "expected_status": "matched"
+  },
+  {
+    "invoice": "INV-2026-0062",
+    "expected_status": "matched"
+  },
+  {
+    "invoice": "INV-2026-0063",
+    "expected_status": "missing_in_2b"
+  },
+  {
+    "invoice": "INV-2026-0064",
+    "expected_status": "matched"
+  },
+  {
+    "invoice": "INV-2026-0065",
+    "expected_status": "missing_in_2b"
+  },
+  {
+    "invoice": "INV-2026-0066",
+    "expected_status": "fuzzy_match"
+  },
+  {
+    "invoice": "INV-2026-0067",
+    "expected_status": "matched"
+  },
+  {
+    "invoice": "INV-2026-0068",
+    "expected_status": "matched"
+  },
+  {
+    "invoice": "INV-2026-0069",
+    "expected_status": "matched"
+  },
+  {
+    "invoice": "INV-2026-0070",
+    "expected_status": "matched"
+  },
+  {
+    "invoice": "INV-2026-0071",
+    "expected_status": "matched"
+  },
+  {
+    "invoice": "INV-2026-0072",
+    "expected_status": "value_mismatch"
+  },
+  {
+    "invoice": "INV-2026-0073",
+    "expected_status": "matched"
+  },
+  {
+    "invoice": "INV-2026-0074",
+    "expected_status": "matched"
+  },
+  {
+    "invoice": "INV-2026-0075",
+    "expected_status": "value_mismatch"
+  },
+  {
+    "invoice": "INV-2026-0076",
+    "expected_status": "matched"
+  },
+  {
+    "invoice": "INV-2026-0077",
+    "expected_status": "matched"
+  },
+  {
+    "invoice": "INV-2026-0078",
+    "expected_status": "missing_in_2b"
+  },
+  {
+    "invoice": "INV-2026-0079",
+    "expected_status": "matched"
+  },
+  {
+    "invoice": "INV-2026-0080",
+    "expected_status": "matched"
+  },
+  {
+    "invoice": "INV-2026-0081",
+    "expected_status": "matched"
+  },
+  {
+    "invoice": "INV-2026-0082",
+    "expected_status": "matched"
+  },
+  {
+    "invoice": "INV-2026-0083",
+    "expected_status": "fuzzy_match"
+  },
+  {
+    "invoice": "INV-2026-0084",
+    "expected_status": "matched"
+  },
+  {
+    "invoice": "INV-2026-0085",
+    "expected_status": "value_mismatch"
+  },
+  {
+    "invoice": "INV-2026-0086",
+    "expected_status": "matched"
+  },
+  {
+    "invoice": "INV-2026-0087",
+    "expected_status": "matched"
+  },
+  {
+    "invoice": "INV-2026-0088",
+    "expected_status": "missing_in_2b"
+  },
+  {
+    "invoice": "INV-2026-0089",
+    "expected_status": "matched"
+  },
+  {
+    "invoice": "INV-2026-0090",
+    "expected_status": "matched"
+  },
+  {
+    "invoice": "INV-2026-0091",
+    "expected_status": "matched"
+  },
+  {
+    "invoice": "INV-2026-0092",
+    "expected_status": "matched"
+  },
+  {
+    "invoice": "INV-2026-0093",
+    "expected_status": "missing_in_2b"
+  },
+  {
+    "invoice": "INV-2026-0094",
+    "expected_status": "fuzzy_match"
+  },
+  {
+    "invoice": "INV-2026-0095",
+    "expected_status": "matched"
+  },
+  {
+    "invoice": "INV-2026-0096",
+    "expected_status": "matched"
+  },
+  {
+    "invoice": "INV-2026-0097",
+    "expected_status": "matched"
+  },
+  {
+    "invoice": "INV-2026-0098",
+    "expected_status": "missing_in_2b"
+  },
+  {
+    "invoice": "INV-2026-0099",
+    "expected_status": "matched"
+  },
+  {
+    "invoice": "INV-2026-0100",
+    "expected_status": "matched"
+  },
+  {
+    "invoice": "INV-2026-0101",
+    "expected_status": "missing_in_2b"
+  },
+  {
+    "invoice": "INV-2026-0102",
+    "expected_status": "matched"
+  },
+  {
+    "invoice": "INV-2026-0103",
+    "expected_status": "matched"
+  },
+  {
+    "invoice": "INV-2026-0104",
+    "expected_status": "fuzzy_match"
+  },
+  {
+    "invoice": "INV-2026-0105",
+    "expected_status": "matched"
+  },
+  {
+    "invoice": "INV-2026-0106",
+    "expected_status": "matched"
+  },
+  {
+    "invoice": "INV-2026-0107",
+    "expected_status": "matched"
+  },
+  {
+    "invoice": "INV-2026-0108",
+    "expected_status": "matched"
+  },
+  {
+    "invoice": "INV-2026-0109",
+    "expected_status": "matched"
+  },
+  {
+    "invoice": "INV-2026-0110",
+    "expected_status": "value_mismatch"
+  },
+  {
+    "invoice": "INV-2026-0111",
+    "expected_status": "missing_in_2b"
+  },
+  {
+    "invoice": "INV-2026-0112",
+    "expected_status": "matched"
+  },
+  {
+    "invoice": "INV-2026-0113",
+    "expected_status": "matched"
+  },
+  {
+    "invoice": "INV-2026-0114",
+    "expected_status": "matched"
+  },
+  {
+    "invoice": "INV-2026-0115",
+    "expected_status": "matched"
+  },
+  {
+    "invoice": "INV-2026-0116",
+    "expected_status": "matched"
+  },
+  {
+    "invoice": "INV-2026-0117",
+    "expected_status": "missing_in_2b"
+  },
+  {
+    "invoice": "INV-2026-0118",
+    "expected_status": "matched"
+  },
+  {
+    "invoice": "INV-2026-0119",
+    "expected_status": "value_mismatch"
+  },
+  {
+    "invoice": "INV-2026-0120",
+    "expected_status": "matched"
+  },
+  {
+    "invoice": "INV-2026-0121",
+    "expected_status": "value_mismatch"
+  },
+  {
+    "invoice": "INV-2026-0122",
+    "expected_status": "matched"
+  },
+  {
+    "invoice": "INV-2026-0123",
+    "expected_status": "fuzzy_match"
+  },
+  {
+    "invoice": "INV-2026-0124",
+    "expected_status": "matched"
+  },
+  {
+    "invoice": "INV-2026-0125",
+    "expected_status": "matched"
+  },
+  {
+    "invoice": "INV-2026-0126",
+    "expected_status": "fuzzy_match"
+  },
+  {
+    "invoice": "INV-2026-0127",
+    "expected_status": "matched"
+  },
+  {
+    "invoice": "INV-2026-0128",
+    "expected_status": "matched"
+  },
+  {
+    "invoice": "INV-2026-0129",
+    "expected_status": "matched"
+  },
+  {
+    "invoice": "INV-2026-0130",
+    "expected_status": "matched"
+  },
+  {
+    "invoice": "INV-2026-0131",
+    "expected_status": "matched"
+  },
+  {
+    "invoice": "INV-2026-0132",
+    "expected_status": "matched"
+  },
+  {
+    "invoice": "INV-2026-0133",
+    "expected_status": "value_mismatch"
+  },
+  {
+    "invoice": "INV-2026-0134",
+    "expected_status": "matched"
+  },
+  {
+    "invoice": "INV-2026-0135",
+    "expected_status": "matched"
+  },
+  {
+    "invoice": "INV-2026-0136",
+    "expected_status": "value_mismatch"
+  },
+  {
+    "invoice": "INV-2026-0137",
+    "expected_status": "value_mismatch"
+  },
+  {
+    "invoice": "INV-2026-0138",
+    "expected_status": "fuzzy_match"
+  },
+  {
+    "invoice": "INV-2026-0139",
+    "expected_status": "value_mismatch"
+  },
+  {
+    "invoice": "INV-2026-0140",
+    "expected_status": "matched"
+  },
+  {
+    "invoice": "INV-2026-0141",
+    "expected_status": "matched"
+  },
+  {
+    "invoice": "INV-2026-0142",
+    "expected_status": "matched"
+  },
+  {
+    "invoice": "INV-2026-0143",
+    "expected_status": "matched"
+  },
+  {
+    "invoice": "INV-2026-0144",
+    "expected_status": "value_mismatch"
+  },
+  {
+    "invoice": "INV-2026-0145",
+    "expected_status": "matched"
+  },
+  {
+    "invoice": "INV-2026-0146",
+    "expected_status": "missing_in_2b"
+  },
+  {
+    "invoice": "INV-2026-0147",
+    "expected_status": "matched"
+  },
+  {
+    "invoice": "INV-2026-0148",
+    "expected_status": "matched"
+  },
+  {
+    "invoice": "INV-2026-0149",
+    "expected_status": "value_mismatch"
+  },
+  {
+    "invoice": "INV-2026-0150",
+    "expected_status": "matched"
+  },
+  {
+    "invoice": "INV-2026-0151",
+    "expected_status": "value_mismatch"
+  },
+  {
+    "invoice": "INV-2026-0152",
+    "expected_status": "matched"
+  },
+  {
+    "invoice": "INV-2026-0153",
+    "expected_status": "value_mismatch"
+  },
+  {
+    "invoice": "INV-2026-0154",
+    "expected_status": "value_mismatch"
+  },
+  {
+    "invoice": "INV-2026-0155",
+    "expected_status": "matched"
+  },
+  {
+    "invoice": "INV-2026-0156",
+    "expected_status": "matched"
+  },
+  {
+    "invoice": "INV-2026-0157",
+    "expected_status": "matched"
+  },
+  {
+    "invoice": "INV-2026-0158",
+    "expected_status": "matched"
+  },
+  {
+    "invoice": "INV-2026-0159",
+    "expected_status": "matched"
+  },
+  {
+    "invoice": "INV-2026-0160",
+    "expected_status": "matched"
+  },
+  {
+    "invoice": "INV-2026-0161",
+    "expected_status": "matched"
+  },
+  {
+    "invoice": "INV-2026-0162",
+    "expected_status": "missing_in_2b"
+  },
+  {
+    "invoice": "INV-2026-0163",
+    "expected_status": "matched"
+  },
+  {
+    "invoice": "INV-2026-0164",
+    "expected_status": "matched"
+  },
+  {
+    "invoice": "INV-2026-0165",
+    "expected_status": "fuzzy_match"
+  },
+  {
+    "invoice": "INV-2026-0166",
+    "expected_status": "matched"
+  },
+  {
+    "invoice": "INV-2026-0167",
+    "expected_status": "matched"
+  },
+  {
+    "invoice": "INV-2026-0168",
+    "expected_status": "fuzzy_match"
+  },
+  {
+    "invoice": "INV-2026-0169",
+    "expected_status": "matched"
+  },
+  {
+    "invoice": "INV-2026-0170",
+    "expected_status": "matched"
+  },
+  {
+    "invoice": "INV-2026-0171",
+    "expected_status": "matched"
+  },
+  {
+    "invoice": "INV-2026-0172",
+    "expected_status": "matched"
+  },
+  {
+    "invoice": "INV-2026-0173",
+    "expected_status": "fuzzy_match"
+  },
+  {
+    "invoice": "INV-2026-0174",
+    "expected_status": "matched"
+  },
+  {
+    "invoice": "INV-2026-0175",
+    "expected_status": "value_mismatch"
+  },
+  {
+    "invoice": "INV-2026-0176",
+    "expected_status": "matched"
+  },
+  {
+    "invoice": "INV-2026-0177",
+    "expected_status": "missing_in_2b"
+  },
+  {
+    "invoice": "INV-2026-0178",
+    "expected_status": "missing_in_2b"
+  },
+  {
+    "invoice": "INV-2026-0179",
+    "expected_status": "fuzzy_match"
+  },
+  {
+    "invoice": "INV-2026-0180",
+    "expected_status": "matched"
+  },
+  {
+    "invoice": "INV-2026-0181",
+    "expected_status": "matched"
+  },
+  {
+    "invoice": "INV-2026-0182",
+    "expected_status": "matched"
+  },
+  {
+    "invoice": "INV-2026-0183",
+    "expected_status": "matched"
+  },
+  {
+    "invoice": "INV-2026-0184",
+    "expected_status": "matched"
+  },
+  {
+    "invoice": "INV-2026-0185",
+    "expected_status": "matched"
+  },
+  {
+    "invoice": "INV-2026-0186",
+    "expected_status": "matched"
+  },
+  {
+    "invoice": "INV-2026-0187",
+    "expected_status": "fuzzy_match"
+  },
+  {
+    "invoice": "INV-2026-0188",
+    "expected_status": "missing_in_2b"
+  },
+  {
+    "invoice": "INV-2026-0189",
+    "expected_status": "matched"
+  },
+  {
+    "invoice": "INV-2026-0190",
+    "expected_status": "matched"
+  },
+  {
+    "invoice": "INV-2026-0191",
+    "expected_status": "fuzzy_match"
+  },
+  {
+    "invoice": "INV-2026-0192",
+    "expected_status": "matched"
+  },
+  {
+    "invoice": "INV-2026-0193",
+    "expected_status": "matched"
+  },
+  {
+    "invoice": "INV-2026-0194",
+    "expected_status": "matched"
+  },
+  {
+    "invoice": "INV-2026-0195",
+    "expected_status": "matched"
+  },
+  {
+    "invoice": "INV-2026-0196",
+    "expected_status": "matched"
+  },
+  {
+    "invoice": "INV-2026-0197",
+    "expected_status": "matched"
+  },
+  {
+    "invoice": "INV-2026-0198",
+    "expected_status": "matched"
+  },
+  {
+    "invoice": "INV-2026-0199",
+    "expected_status": "matched"
+  }
+]

@@ -4,11 +4,12 @@ Per API_SPEC.md §6:
     POST /api/v1/reconciliations
     GET  /api/v1/reconciliations/{period_id}
     GET  /api/v1/reconciliations/{period_id}/exceptions
+    GET  /api/v1/reconciliations/{period_id}/export
 """
 
 from __future__ import annotations
 
-from fastapi import APIRouter, Depends, Query, status
+from fastapi import APIRouter, Depends, Query, status, Response
 from sqlalchemy.orm import Session
 
 from app.auth import AuthContext, get_auth_context
@@ -89,4 +90,25 @@ def list_reconciliation_exceptions(
         page=page,
         page_size=page_size,
         has_next=(page * page_size) < total,
+    )
+
+
+@router.get("/reconciliations/{period_id}/export")
+def export_reconciliation_report(
+    period_id: str,
+    format: str = Query(default="csv", pattern="^(csv|xlsx)$"),
+    db: Session = Depends(get_db),
+    auth: AuthContext = Depends(get_auth_context),
+) -> Response:
+    """Export reconciliation report as CSV or XLSX."""
+    csv_bytes, filename = reconciliation_service.export_reconciliation_report(
+        db,
+        auth=auth,
+        period_id=period_id,
+        format=format,
+    )
+    return Response(
+        content=csv_bytes,
+        media_type="text/csv",
+        headers={"Content-Disposition": f"attachment; filename={filename}"},
     )

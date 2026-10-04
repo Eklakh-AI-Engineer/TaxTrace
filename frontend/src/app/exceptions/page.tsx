@@ -2,17 +2,66 @@
 
 import { useQuery } from '@tanstack/react-query';
 import { api } from '@/lib/api';
+import { usePeriod } from '@/lib/period-context';
 import Link from 'next/link';
-
-// Using a hardcoded period_id for MVP since we don't have a period selector yet.
-// In a real app, this would come from a context or URL parameter.
-const DEFAULT_PERIOD_ID = 'test-period-1';
+import { Download, FileText } from 'lucide-react';
 
 export default function ExceptionsPage() {
+  const { selectedPeriod, periods, setSelectedPeriod, isLoading: periodsLoading } = usePeriod();
+  const periodId = selectedPeriod?.id;
+
   const { data: exceptions, isLoading } = useQuery({
-    queryKey: ['exceptions', DEFAULT_PERIOD_ID],
-    queryFn: () => api.exceptions.list(DEFAULT_PERIOD_ID),
+    queryKey: ['exceptions', periodId],
+    queryFn: () => api.exceptions.list(periodId!),
+    enabled: !!periodId,
   });
+
+  const handleExport = async (format: 'csv' | 'xlsx' = 'csv') => {
+    if (!periodId) return;
+    try {
+      const blob = await api.exceptions.export(periodId, format);
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `reconciliation-report-${periodId}-${new Date().toISOString().split('T')[0]}.${format}`;
+      document.body.appendChild(a);
+      a.click();
+      window.URL.revokeObjectURL(url);
+      document.body.removeChild(a);
+    } catch (error) {
+      alert('Failed to export report');
+    }
+  };
+
+  if (periodsLoading) {
+    return <div className="p-8">Loading periods...</div>;
+  }
+
+  if (!periodId) {
+    return (
+      <div className="p-8 space-y-8">
+        <h1 className="text-2xl font-semibold text-slate-900">Exceptions</h1>
+        <div className="bg-white shadow sm:rounded-lg p-8 text-center">
+          <p className="text-sm text-slate-500 mb-4">Select a compliance period to view exceptions.</p>
+          <select
+            value={selectedPeriod?.id || ''}
+            onChange={(e) => {
+              const period = periods.find(p => p.id === e.target.value);
+              setSelectedPeriod(period || null);
+            }}
+            className="inline-flex items-center px-4 py-2 text-sm rounded-lg border border-slate-300 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none"
+          >
+            <option value="">Select a period...</option>
+            {periods.map((p) => (
+              <option key={p.id} value={p.id}>
+                {p.financial_year} - {p.tax_period} ({p.status})
+              </option>
+            ))}
+          </select>
+        </div>
+      </div>
+    );
+  }
 
   if (isLoading) {
     return <div className="p-8">Loading exceptions...</div>;
@@ -26,6 +75,29 @@ export default function ExceptionsPage() {
           <p className="mt-2 text-sm text-slate-700">
             A list of all reconciliation exceptions requiring review.
           </p>
+        </div>
+        <div className="mt-4 sm:mt-0 flex items-center gap-3">
+          <select
+            value={periodId}
+            onChange={(e) => {
+              const period = periods.find(p => p.id === e.target.value);
+              setSelectedPeriod(period || null);
+            }}
+            className="px-3 py-1.5 text-sm rounded-lg border border-slate-300 bg-white focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none"
+          >
+            {periods.map((p) => (
+              <option key={p.id} value={p.id}>
+                {p.financial_year} - {p.tax_period} ({p.status})
+              </option>
+            ))}
+          </select>
+          <button
+            onClick={() => handleExport('csv')}
+            className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg bg-white border border-slate-300 text-slate-700 hover:bg-slate-50"
+          >
+            <Download className="w-4 h-4" />
+            Export CSV
+          </button>
         </div>
       </div>
 
@@ -69,7 +141,7 @@ export default function ExceptionsPage() {
             {exceptions?.length === 0 && (
               <tr>
                 <td colSpan={5} className="py-8 text-center text-sm text-slate-500">
-                  No exceptions found.
+                  No exceptions found for this period.
                 </td>
               </tr>
             )}

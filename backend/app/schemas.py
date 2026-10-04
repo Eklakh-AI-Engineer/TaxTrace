@@ -515,11 +515,17 @@ class DashboardNoticeMetric(BaseModel):
     urgent_deadlines_within_7_days: int = 0
 
 
+class DashboardOperationalMetric(BaseModel):
+    estimated_hours_saved: float = 0.0
+    manual_overrides: int = 0
+    ai_drafts_generated: int = 0
+
 class DashboardOverviewResponse(BaseModel):
     firm_id: str
     generated_at: datetime
     tasks: DashboardTaskMetric
     exceptions: DashboardExceptionMetric
     notices: DashboardNoticeMetric
+    operations: DashboardOperationalMetric = Field(default_factory=DashboardOperationalMetric)
     overdue_task_items: list[TaskRead] = []
 
