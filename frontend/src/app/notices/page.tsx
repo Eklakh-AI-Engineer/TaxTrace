@@ -25,7 +25,7 @@ export default function NoticesPage() {
     return <div className="p-8 text-red-500">Failed to load notices.</div>;
   }
 
-  const noticeList = Array.isArray(notices) ? notices : (notices as any)?.items || [];
+  const noticeList = Array.isArray(notices) ? notices : ((notices as unknown as { items?: NoticeCase[] })?.items) || [];
 
   return (
     <div className="p-8 space-y-8">
@@ -52,7 +52,7 @@ export default function NoticesPage() {
             </tr>
           </thead>
           <tbody className="divide-y divide-slate-200 bg-white">
-            {noticeList.map((notice: NoticeCase) => (
+            {noticeList.map((notice) => (
               <tr key={notice.id}>
                 <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-slate-900">
                   <span className="inline-flex items-center gap-1.5">

@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { api } from '@/lib/api';
 import { Task } from '@/lib/types';
-import { Clock, Plus, Mail, MessageCircle, ChevronDown, X, Send, User, AlertTriangle } from 'lucide-react';
+import { Plus, Mail, MessageCircle, X, Send } from 'lucide-react';
 import { TaskCard } from '@/components/TaskCard';
 
 type Column = { id: string; title: string; color: string; border: string };
@@ -33,7 +33,7 @@ function CreateTaskModal({ onClose, onCreated }: { onClose: () => void; onCreate
         description: description || undefined,
         due_date: dueDate || undefined,
         owner_id: assignee || undefined,
-      } as any);
+      });
       onCreated();
       onClose();
     } catch {
@@ -167,7 +167,7 @@ export default function TasksPage() {
   });
 
   const updateMutation = useMutation({
-    mutationFn: ({ id, status }: { id: string; status: string }) => api.tasks.update(id, { status } as any),
+    mutationFn: ({ id, status }: { id: string; status: string }) => api.tasks.update(id, { status }),
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ['tasks'] }),
   });
 
@@ -184,7 +184,7 @@ export default function TasksPage() {
     );
   }
 
-  const taskList = Array.isArray(tasks) ? tasks : (tasks as any)?.items || [];
+  const taskList = Array.isArray(tasks) ? tasks : ((tasks as unknown as { items?: Task[] })?.items) || [];
 
   return (
     <div className="p-8 h-full flex flex-col">
@@ -201,7 +201,7 @@ export default function TasksPage() {
 
       <div className="flex-1 flex gap-6 overflow-x-auto pb-4">
         {COLUMNS.map((column) => {
-          const colTasks = taskList.filter((t: Task) => t.status === column.id);
+          const colTasks = taskList.filter((t) => t.status === column.id);
           return (
             <div key={column.id} className={`flex flex-col flex-none w-80 rounded-xl p-4 ${column.color} border ${column.border}`}>
               <div className="flex items-center justify-between mb-4">

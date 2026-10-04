@@ -1,11 +1,11 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useParams, useRouter } from 'next/navigation';
 import { api } from '@/lib/api';
-import { NoticeDetail, Draft, Evidence, ExtractionResponse } from '@/lib/types';
-import { ArrowLeft, FileText, AlertTriangle, CheckCircle2, XCircle, Clock, Gavel, Send, Edit2, Download } from 'lucide-react';
+import { NoticeDetail, Draft, ExtractionResponse } from '@/lib/types';
+import { ArrowLeft, FileText, AlertTriangle, CheckCircle2, XCircle, Clock, Gavel, Send, Download } from 'lucide-react';
 import Link from 'next/link';
 
 export default function NoticeDetailPage() {

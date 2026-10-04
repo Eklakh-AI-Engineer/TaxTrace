@@ -1,6 +1,6 @@
 'use client';
 
-import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import { createContext, useContext, useState, useEffect, useMemo, useRef, ReactNode } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { api } from '@/lib/api';
 import { Period } from '@/lib/types';
@@ -28,9 +28,28 @@ export function PeriodProvider({ children }: { children: ReactNode }) {
     queryFn: () => api.periods.list(),
   });
 
-  const periodList: Period[] = Array.isArray(periods) ? periods : (periods as any)?.items || [];
+  const periodList: Period[] = Array.isArray(periods) ? periods : ((periods as unknown as { items?: Period[] })?.items) || [];
 
-  const selectedPeriod = periodList.find((p: Period) => p.id === selectedPeriodId) || null;
+  // Clear selected period if it's no longer in the list
+  const selectedPeriod = useMemo(() => {
+    if (!selectedPeriodId) return null;
+    return periodList.find((p: Period) => p.id === selectedPeriodId) || null;
+  }, [periodList, selectedPeriodId]);
+
+  // Clear invalid selection when periods change
+  const clearedRef = useRef<Set<string>>(new Set());
+  
+  useEffect(() => {
+    const listKey = periodList.map(p => p.id).join(',');
+    if (selectedPeriodId && !periodList.find((p: Period) => p.id === selectedPeriodId)) {
+      if (!clearedRef.current.has(listKey)) {
+        clearedRef.current.add(listKey);
+        localStorage.removeItem('selectedPeriodId');
+        setSelectedPeriodId(null);
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [periodList]);
 
   const setSelectedPeriod = (period: Period | null) => {
     if (period) {
@@ -41,13 +60,6 @@ export function PeriodProvider({ children }: { children: ReactNode }) {
       localStorage.removeItem('selectedPeriodId');
     }
   };
-
-  useEffect(() => {
-    if (selectedPeriodId && !periodList.find((p: Period) => p.id === selectedPeriodId)) {
-      setSelectedPeriodId(null);
-      localStorage.removeItem('selectedPeriodId');
-    }
-  }, [periodList, selectedPeriodId]);
 
   return (
     <PeriodContext.Provider value={{

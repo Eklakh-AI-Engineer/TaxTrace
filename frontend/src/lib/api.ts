@@ -11,6 +11,7 @@ import {
   DraftApproveRequest,
   DraftMessageResponse,
   Period,
+  AIExplanationResponse,
 } from './types';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api/v1';
@@ -64,7 +65,7 @@ export const api = {
         method: 'POST',
         body: JSON.stringify({ action, reason }),
       }),
-    explain: (id: string, mode: string = 'standard') => fetchAPI<any>(`/exceptions/${id}/explanation`, {
+    explain: (id: string, mode: string = 'standard') => fetchAPI<AIExplanationResponse>(`/exceptions/${id}/explanation`, {
       method: 'POST',
       body: JSON.stringify({ mode }),
     }),

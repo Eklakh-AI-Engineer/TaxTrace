@@ -16,7 +16,7 @@ vi.mock('next/navigation', () => ({
 
 // Mock next/link
 vi.mock('next/link', () => ({
-  default: ({ children, href, ...props }: any) => (
+  default: ({ children, href, ...props }: React.ComponentProps<'a'>) => (
     React.createElement('a', { href, ...props }, children)
   ),
 }));
@@ -31,16 +31,16 @@ vi.mock('lucide-react', () => {
     'ChevronDown', 'Send', 'Ban', 'TrendingUp', 'Gavel', 'Edit2',
     'FileWarning', 'AlertTriangle', 'CheckCircle2', 'XCircle',
   ];
-  const mockComponents: Record<string, any> = {};
+  const mockComponents: Record<string, React.ComponentType<Record<string, unknown>>> = {};
   for (const icon of icons) {
-    mockComponents[icon] = (props: any) => React.createElement('svg', { ...props, 'data-testid': icon.toLowerCase() });
+    mockComponents[icon] = (props: Record<string, unknown>) => React.createElement('svg', { ...props, 'data-testid': icon.toLowerCase() });
   }
   return mockComponents;
 });
 
 // Mock tanstack/react-query
 vi.mock('@tanstack/react-query', () => ({
-  useQuery: vi.fn(({ queryKey, queryFn, enabled }: any) => {
+  useQuery: vi.fn(({ queryKey, queryFn, enabled }: { queryKey?: unknown[]; queryFn?: () => Promise<unknown>; enabled?: boolean }) => {
     // Handle exceptions query
     if (queryKey?.[0] === 'exceptions' && enabled) {
       return {
@@ -109,7 +109,7 @@ vi.mock('@tanstack/react-query', () => ({
     setQueryData: vi.fn(),
     getQueryData: vi.fn(),
   })),
-  QueryClientProvider: ({ children }: any) => children,
+  QueryClientProvider: ({ children }: { children: React.ReactNode }) => children,
 }));
 
 // Mock api
@@ -154,12 +154,12 @@ vi.mock('@/lib/period-context', () => ({
     setSelectedPeriod: vi.fn(),
     isLoading: false,
   })),
-  PeriodProvider: ({ children }: any) => children,
+  PeriodProvider: ({ children }: { children: React.ReactNode }) => children,
 }));
 
 // Mock utils
 vi.mock('@/lib/utils', () => ({
-  cn: (...args: any[]) => args.filter(Boolean).join(' '),
+  cn: (...args: unknown[]) => args.filter(Boolean).join(' '),
 }));
 
 // Global test utilities
@@ -176,7 +176,7 @@ global.React = React;
 // Suppress console errors in tests (optional)
 const originalError = console.error;
 beforeAll(() => {
-  console.error = (...args: any[]) => {
+  console.error = (...args: unknown[]) => {
     if (args[0]?.includes?.('Warning: ReactDOM.render is no longer supported')) return;
     if (args[0]?.includes?.('act(...)')) return;
     originalError.call(console, ...args);

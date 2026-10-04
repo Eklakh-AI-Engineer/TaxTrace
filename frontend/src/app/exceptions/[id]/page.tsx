@@ -2,13 +2,12 @@
 
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { api } from '@/lib/api';
-import { useParams, useRouter } from 'next/navigation';
-import { ArrowLeft, Check, X, HelpCircle, FileText } from 'lucide-react';
+import { useParams } from 'next/navigation';
+import { ArrowLeft, Check, X, HelpCircle } from 'lucide-react';
 import Link from 'next/link';
 
 export default function ExceptionDetail() {
   const params = useParams();
-  const router = useRouter();
   const queryClient = useQueryClient();
   const id = params.id as string;
 

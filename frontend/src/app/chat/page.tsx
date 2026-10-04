@@ -55,7 +55,7 @@ export default function ChatSimulatorPage() {
         text: response.reply,
         timestamp: new Date()
       }]);
-    } catch (err) {
+    } catch {
       setMessages(prev => [...prev, {
         id: (Date.now() + 1).toString(),
         sender: 'bot',
@@ -70,7 +70,7 @@ export default function ChatSimulatorPage() {
   const formatText = (text: string) => {
     // Basic formatting for WhatsApp-style markdown (*bold*, _italic_, etc.)
     // Note: React doesn't natively parse markdown, this is a very simple custom renderer for the simulator
-    let formatted = text.replace(/\*(.*?)\*/g, '<strong>$1</strong>');
+    const formatted = text.replace(/\*(.*?)\*/g, '<strong>$1</strong>');
     return <div dangerouslySetInnerHTML={{ __html: formatted.replace(/\n/g, '<br />') }} />;
   };
 

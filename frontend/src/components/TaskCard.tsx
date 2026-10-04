@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { Task } from '@/lib/types';
-import { Clock, ChevronDown, X, User, AlertTriangle } from 'lucide-react';
+import { Clock, ChevronDown, User, AlertTriangle } from 'lucide-react';
 
 type Column = { id: string; title: string; color: string; border: string };
 

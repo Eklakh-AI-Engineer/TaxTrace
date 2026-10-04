@@ -3,7 +3,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { api } from '@/lib/api';
 import { usePeriod } from '@/lib/period-context';
-import { AlertTriangle, CheckSquare, Clock, FileWarning, ListTodo, Ban, TrendingUp, Calendar } from 'lucide-react';
+import { AlertTriangle, Clock, FileWarning, ListTodo, Ban, TrendingUp, Calendar } from 'lucide-react';
 import Link from 'next/link';
 
 export default function Dashboard() {

@@ -50,7 +50,7 @@ export interface Evidence {
   source_text?: string;
   source_url?: string;
   source_version?: string;
-  meta_data?: Record<string, any>;
+  meta_data?: Record<string, unknown>;
   created_at: string;
 }
 
@@ -94,7 +94,7 @@ export interface NoticeDetail extends NoticeCase {
   tax_period?: string;
   demand_tax_amount?: number;
   cited_sections: string[];
-  extracted_facts: Record<string, any>;
+  extracted_facts: Record<string, unknown>;
   evidence: Evidence[];
 }
 
@@ -142,4 +142,14 @@ export interface Period {
   tax_period: string;
   status: string;
   created_at: string;
+}
+
+export interface AIExplanationResponse {
+  explanation_id: string;
+  summary: string;
+  facts: string[];
+  possible_causes: string[];
+  suggested_next_steps: string[];
+  confidence: number;
+  evidence_ids: string[];
 }

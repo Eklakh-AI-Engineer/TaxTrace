@@ -4,7 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 import { api } from '@/lib/api';
 import { usePeriod } from '@/lib/period-context';
 import Link from 'next/link';
-import { Download, FileText } from 'lucide-react';
+import { Download } from 'lucide-react';
 
 export default function ExceptionsPage() {
   const { selectedPeriod, periods, setSelectedPeriod, isLoading: periodsLoading } = usePeriod();
@@ -28,7 +28,7 @@ export default function ExceptionsPage() {
       a.click();
       window.URL.revokeObjectURL(url);
       document.body.removeChild(a);
-    } catch (error) {
+    } catch {
       alert('Failed to export report');
     }
   };

@@ -14,8 +14,8 @@ vi.mock('@/lib/period-context', () => ({
 
 // Mock next/link
 vi.mock('next/link', () => ({
-  default: ({ children, href, ...props }: any) => (
-    <a href={href} {...props}>{children}</a>
+  default: ({ children, href, ...props }: React.ComponentProps<'a'>) => (
+    React.createElement('a', { href, ...props }, children)
   ),
 }));
 
