@@ -10,11 +10,13 @@ export default function ExceptionsPage() {
   const { selectedPeriod, periods, setSelectedPeriod, isLoading: periodsLoading } = usePeriod();
   const periodId = selectedPeriod?.id;
 
-  const { data: exceptions, isLoading } = useQuery({
+  const { data: exceptionsData, isLoading } = useQuery({
     queryKey: ['exceptions', periodId],
     queryFn: () => api.exceptions.list(periodId!),
     enabled: !!periodId,
   });
+
+  const exceptions = Array.isArray(exceptionsData) ? exceptionsData : (exceptionsData as any)?.items || [];
 
   const handleExport = async (format: 'csv' | 'xlsx' = 'csv') => {
     if (!periodId) return;
@@ -115,7 +117,7 @@ export default function ExceptionsPage() {
             </tr>
           </thead>
           <tbody className="divide-y divide-slate-200 bg-white">
-            {exceptions?.map((exception) => (
+            {exceptions.map((exception: any) => (
               <tr key={exception.id}>
                 <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-slate-900">
                   {exception.id.substring(0, 8)}...

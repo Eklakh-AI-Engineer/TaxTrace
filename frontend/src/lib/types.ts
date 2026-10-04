@@ -153,3 +153,145 @@ export interface AIExplanationResponse {
   confidence: number;
   evidence_ids: string[];
 }
+
+export interface Client {
+  id: string;
+  firm_id: string;
+  tenant_id: string;
+  display_name: string;
+  gstin?: string;
+  pan_reference?: string;
+  status: string;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface ClientCreate {
+  display_name: string;
+  gstin?: string;
+  pan_reference?: string;
+  status?: string;
+}
+
+export interface ClientUpdate {
+  display_name?: string;
+  gstin?: string;
+  pan_reference?: string;
+  status?: string;
+}
+
+export interface KnowledgeSearchRequest {
+  query: string;
+  limit?: number;
+}
+
+export interface KnowledgeSearchResult {
+  chunk_id: string;
+  source_id: string;
+  title: string;
+  section: string | null;
+  content: string;
+  url: string | null;
+  version: string | null;
+}
+
+export interface KnowledgeSearchResponse {
+  results: KnowledgeSearchResult[];
+}
+
+export interface KnowledgeSource {
+  id: string;
+  tenant_id: string;
+  source_type: string;
+  title: string;
+  url: string | null;
+  publisher: string | null;
+  version: string | null;
+  effective_from: string | null;
+  effective_to: string | null;
+  meta_data: Record<string, unknown> | null;
+  created_at: string;
+}
+
+export interface KnowledgeSourceCreate {
+  source_type: string;
+  title: string;
+  content: string;
+  url?: string;
+  publisher?: string;
+  version?: string;
+  effective_from?: string;
+  effective_to?: string;
+  meta_data?: Record<string, unknown>;
+}
+
+export interface Settings {
+  user_id: string;
+  email: string;
+  name: string;
+  theme: "light" | "dark" | "system";
+  notifications_enabled: boolean;
+  email_notifications: boolean;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface SettingsUpdate {
+  theme?: "light" | "dark" | "system";
+  notifications_enabled?: boolean;
+  email_notifications?: boolean;
+  name?: string;
+}
+
+export interface PaginatedResponse<T> {
+  items: T[];
+  total: number;
+  page: number;
+  page_size: number;
+  has_next: boolean;
+}
+
+export interface ReconciliationRunRequest {
+  client_id: string;
+  period_id: string;
+  rule_version: string;
+}
+
+export interface ReconciliationSummary {
+  matched: number;
+  partial_match: number;
+  missing_in_2b: number;
+  missing_in_books: number;
+  duplicates: number;
+  review_required: number;
+  total_exceptions: number;
+}
+
+export interface ReconciliationRunResponse {
+  period_id: string;
+  status: string;
+  summary: ReconciliationSummary;
+  total_matches_created: number;
+  total_exceptions_created: number;
+}
+
+export interface ExceptionRead {
+  id: string;
+  firm_id: string;
+  period_id: string;
+  tenant_id: string;
+  match_id: string | null;
+  type: string;
+  severity: string;
+  status: string;
+  reason_code: string | null;
+  explanation: string | null;
+  created_by_system: boolean;
+  assigned_to: string | null;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface ExceptionDetailRead extends ExceptionRead {
+  evidence: Evidence[];
+}

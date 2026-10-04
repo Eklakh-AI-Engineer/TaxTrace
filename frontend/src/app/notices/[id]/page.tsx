@@ -125,7 +125,7 @@ export default function NoticeDetailPage() {
             </h3>
             {notice.cited_sections.length > 0 ? (
               <div className="flex flex-wrap gap-2">
-                {notice.cited_sections.map((section) => (
+                {notice.cited_sections.map((section: string) => (
                   <span key={section} className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-indigo-50 text-indigo-700 border border-indigo-200">
                     Section {section}
                   </span>
@@ -232,7 +232,7 @@ export default function NoticeDetailPage() {
             <div className="p-6">
               {notice.evidence.length > 0 ? (
                 <div className="space-y-4">
-                  {notice.evidence.map((ev) => (
+                  {notice.evidence.map((ev: any) => (
                     <div key={ev.id} className="border border-slate-200 rounded-lg p-4 bg-slate-50/50">
                       <div className="flex items-start justify-between gap-4">
                         <div className="flex-1">

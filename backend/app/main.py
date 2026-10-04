@@ -18,10 +18,12 @@ from app.api.drafts import router as drafts_router
 from app.api.exceptions import router as exceptions_router
 from app.api.firms import router as firms_router
 from app.api.health import router as health_router
+from app.api.knowledge import router as knowledge_router
 from app.api.notices import router as notices_router
 from app.api.periods import router as periods_router
 from app.api.reconciliations import router as reconciliations_router
 from app.api.retention import router as retention_router
+from app.api.settings import router as settings_router
 from app.api.tasks import router as tasks_router
 from app.api.users import router as users_router
 from app.api.webhooks import router as webhooks_router
@@ -151,6 +153,8 @@ app.include_router(dashboard_router)
 app.include_router(users_router)
 app.include_router(webhooks_router)
 app.include_router(retention_router)
+app.include_router(knowledge_router)
+app.include_router(settings_router)
 
 
 # ---------------------------------------------------------------------------

@@ -492,6 +492,70 @@ class MessageDraftResponse(BaseModel):
 
 
 # ---------------------------------------------------------------------------
+# Knowledge Base schemas
+# ---------------------------------------------------------------------------
+
+
+class KnowledgeSourceCreate(BaseModel):
+    source_type: str = Field(..., min_length=1, max_length=50)  # act, circular, faq, guidance, case_law
+    title: str = Field(..., min_length=1, max_length=255)
+    content: str = Field(..., min_length=1)  # raw text content to ingest
+    url: Optional[str] = Field(default=None, max_length=500)
+    publisher: Optional[str] = Field(default=None, max_length=255)
+    version: Optional[str] = Field(default=None, max_length=100)
+    effective_from: Optional[date] = None
+    effective_to: Optional[date] = None
+    meta_data: Optional[dict] = None
+
+
+class KnowledgeSourceRead(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
+    id: str
+    tenant_id: str
+    source_type: str
+    title: str
+    url: Optional[str] = None
+    publisher: Optional[str] = None
+    version: Optional[str] = None
+    effective_from: Optional[date] = None
+    effective_to: Optional[date] = None
+    meta_data: Optional[dict] = None
+    created_at: datetime
+
+
+class KnowledgeSearchRequest(BaseModel):
+    query: str = Field(..., min_length=1, max_length=1000)
+    limit: int = Field(default=5, ge=1, le=20)
+
+
+class KnowledgeSearchResponse(BaseModel):
+    results: list[dict]
+
+
+# ---------------------------------------------------------------------------
+# Settings schemas
+# ---------------------------------------------------------------------------
+
+
+class SettingsRead(BaseModel):
+    user_id: str
+    email: str
+    name: str
+    theme: str  # "light", "dark", "system"
+    notifications_enabled: bool
+    email_notifications: bool
+    created_at: datetime
+    updated_at: datetime
+
+
+class SettingsUpdate(BaseModel):
+    theme: Optional[str] = Field(default=None, pattern="^(light|dark|system)$")
+    notifications_enabled: Optional[bool] = None
+    email_notifications: Optional[bool] = None
+
+
+# ---------------------------------------------------------------------------
 # Retention & Deletion schemas
 # ---------------------------------------------------------------------------
 

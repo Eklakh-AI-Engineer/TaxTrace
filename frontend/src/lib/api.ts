@@ -12,6 +12,20 @@ import {
   DraftMessageResponse,
   Period,
   AIExplanationResponse,
+  Client,
+  ClientCreate,
+  ClientUpdate,
+  KnowledgeSearchRequest,
+  KnowledgeSearchResponse,
+  KnowledgeSource,
+  KnowledgeSourceCreate,
+  Settings,
+  SettingsUpdate,
+  ReconciliationRunRequest,
+  ReconciliationRunResponse,
+  ReconciliationSummary,
+  ExceptionRead,
+  PaginatedResponse,
 } from './types';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api/v1';
@@ -57,11 +71,62 @@ export const api = {
   periods: {
     list: () => fetchAPI<Period[]>('/periods'),
   },
+  clients: {
+    list: (params?: { status?: string; search?: string; page?: number; page_size?: number }) => {
+      const searchParams = new URLSearchParams();
+      if (params?.status) searchParams.set('status', params.status);
+      if (params?.search) searchParams.set('search', params.search);
+      if (params?.page) searchParams.set('page', params.page.toString());
+      if (params?.page_size) searchParams.set('page_size', params.page_size.toString());
+      return fetchAPI<{ items: Client[]; total: number; page: number; page_size: number; has_next: boolean }>(
+        `/clients?${searchParams.toString()}`
+      );
+    },
+    create: (data: ClientCreate) => fetchAPI<Client>('/clients', {
+      method: 'POST',
+      body: JSON.stringify(data),
+    }),
+    get: (id: string) => fetchAPI<Client>(`/clients/${id}`),
+    update: (id: string, data: ClientUpdate) => fetchAPI<Client>(`/clients/${id}`, {
+      method: 'PATCH',
+      body: JSON.stringify(data),
+    }),
+  },
+  reconciliations: {
+    run: (payload: ReconciliationRunRequest) => fetchAPI<ReconciliationRunResponse>('/reconciliations', {
+      method: 'POST',
+      body: JSON.stringify(payload),
+    }),
+    getSummary: (periodId: string) => fetchAPI<ReconciliationSummary>(`/reconciliations/${periodId}`),
+    listExceptions: (periodId: string, params?: { type?: string; severity?: string; status?: string; page?: number; page_size?: number }) => {
+      const searchParams = new URLSearchParams();
+      if (params?.type) searchParams.set('type', params.type);
+      if (params?.severity) searchParams.set('severity', params.severity);
+      if (params?.status) searchParams.set('status', params.status);
+      if (params?.page) searchParams.set('page', params.page.toString());
+      if (params?.page_size) searchParams.set('page_size', params.page_size.toString());
+      return fetchAPI<PaginatedResponse<ExceptionRead>>(
+        `/reconciliations/${periodId}/exceptions?${searchParams.toString()}`
+      );
+    },
+    export: (periodId: string, format: 'csv' | 'xlsx' = 'csv') => 
+      fetchBlob(`/reconciliations/${periodId}/export?format=${format}`),
+  },
   exceptions: {
-    list: (periodId: string) => fetchAPI<Exception[]>(`/reconciliations/${periodId}/exceptions`),
-    get: (id: string) => fetchAPI<ExceptionDetail>(`/exceptions/${id}`),
+    list: (periodId: string, params?: { type?: string; severity?: string; status?: string; page?: number; page_size?: number }) => {
+      const searchParams = new URLSearchParams();
+      if (params?.type) searchParams.set('type', params.type);
+      if (params?.severity) searchParams.set('severity', params.severity);
+      if (params?.status) searchParams.set('status', params.status);
+      if (params?.page) searchParams.set('page', params.page.toString());
+      if (params?.page_size) searchParams.set('page_size', params.page_size.toString());
+      return fetchAPI<{ items: any[]; total: number; page: number; page_size: number; has_next: boolean }>(
+        `/reconciliations/${periodId}/exceptions?${searchParams.toString()}`
+      );
+    },
+    get: (id: string) => fetchAPI<any>(`/exceptions/${id}`),
     makeDecision: (id: string, action: string, reason?: string) => 
-      fetchAPI<ExceptionDetail>(`/exceptions/${id}/decision`, {
+      fetchAPI<any>(`/exceptions/${id}/decision`, {
         method: 'POST',
         body: JSON.stringify({ action, reason }),
       }),
@@ -88,15 +153,41 @@ export const api = {
     }),
   },
   notices: {
-    list: () => fetchAPI<NoticeCase[]>('/notices'),
-    get: (id: string) => fetchAPI<NoticeDetail>(`/notices/${id}`),
-    extract: (id: string) => fetchAPI<ExtractionResponse>(`/notices/${id}/extract`, { method: 'POST' }),
-    generateDraft: (id: string, payload: DraftCreateRequest) => fetchAPI<Draft>(`/notices/${id}/draft`, {
+    list: () => fetchAPI<any[]>('/notices'),
+    get: (id: string) => fetchAPI<any>(`/notices/${id}`),
+    extract: (id: string) => fetchAPI<any>(`/notices/${id}/extract`, { method: 'POST' }),
+    generateDraft: (id: string, payload: any) => fetchAPI<any>(`/notices/${id}/draft`, {
       method: 'POST',
       body: JSON.stringify(payload),
     }),
-    approveDraft: (draftId: string, payload: DraftApproveRequest) => fetchAPI<Draft>(`/drafts/${draftId}/approve`, {
+    approveDraft: (draftId: string, payload: any) => fetchAPI<any>(`/drafts/${draftId}/approve`, {
       method: 'POST',
+      body: JSON.stringify(payload),
+    }),
+  },
+  knowledge: {
+    search: (payload: { query: string; limit?: number }) => fetchAPI<{ results: any[] }>('/knowledge/search', {
+      method: 'POST',
+      body: JSON.stringify(payload),
+    }),
+    listSources: (params?: { page?: number; page_size?: number }) => {
+      const searchParams = new URLSearchParams();
+      if (params?.page) searchParams.set('page', params.page.toString());
+      if (params?.page_size) searchParams.set('page_size', params.page_size.toString());
+      return fetchAPI<{ items: any[]; total: number; page: number; page_size: number; has_next: boolean }>(
+        `/knowledge/sources?${searchParams.toString()}`
+      );
+    },
+    createSource: (payload: any) => fetchAPI<any>('/knowledge/sources', {
+      method: 'POST',
+      body: JSON.stringify(payload),
+    }),
+    getSource: (id: string) => fetchAPI<any>(`/knowledge/sources/${id}`),
+  },
+  settings: {
+    get: () => fetchAPI<any>('/settings'),
+    update: (payload: any) => fetchAPI<any>('/settings', {
+      method: 'PATCH',
       body: JSON.stringify(payload),
     }),
   },
