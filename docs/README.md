@@ -10,6 +10,8 @@
 | [Security](SECURITY.md) | Tenant isolation, auth, AI safety, pilot limitations |
 | [API](API.md) | API surface and detailed contract references |
 | [Pilot milestone](milestones/PHASE_1_PILOT_READY.md) | Current recorded Definition of Done |
+| [Audit evidence](audits/INDEPENDENT_AUDIT_2026-10-05.md) | Independent audit evidence recorded at commit 81d3613 |
+| [Evidence ledger](audits/EVIDENCE_LEDGER.md) | Current evidence index and local-development status rules |
 | [History](history/README.md) | Archived audits and superseded planning documents |
 
 ## Reference specifications
