@@ -2,66 +2,51 @@
 
 All notable project changes are documented here.
 
-Format follows a simplified Keep a Changelog style.
-
----
-
 ## [Unreleased]
 
-### Added
-- Initial project foundation documents.
-- Evidence-first product thesis.
-- Initial PRD.
-- Initial system architecture.
-- Initial technology stack.
-- Initial repository structure.
-- Initial data model.
-- Initial API contract.
-- Initial UI specification.
-- Initial evaluation plan.
-- Initial testing strategy.
-- Initial security baseline.
-- Initial architecture decisions.
-- Initial roadmap.
-- Initial coding rules.
-- AI-agent development instructions.
+### Documentation
+- Reframed the repository around the current pilot-ready implementation.
+- Added maintained architecture, development, evaluation, security, and API documentation.
+- Archived superseded pre-build specifications and historical audits under `docs/history/`.
 
-### Changed
-- Refined original "AI GST tool" concept into an evidence-first AI compliance execution platform.
-- Reconciliation is defined as a deterministic core with AI assistance rather than an LLM-only workflow.
-- WhatsApp is defined as a channel rather than the complete product interface.
-- Pricing is treated as a hypothesis pending validation.
+### Current implementation baseline
+- FastAPI backend with tenant-aware domain services.
+- Next.js 16 / React 19 frontend.
+- Deterministic GST reconciliation.
+- Evidence-grounded AI assistance and notice drafting.
+- Tasks, dashboard, follow-up, and WhatsApp channel abstraction.
+- Alembic migration path and current Stage 6 schema additions.
 
-### Not yet implemented
-- Production backend.
-- Production frontend.
-- WhatsApp integration.
-- Reconciliation engine.
-- RAG knowledge base.
-- AI notice workflow.
-- Production authentication.
-- Production deployment.
+### Verification
+The current pilot milestone records:
+- 134 backend tests passing;
+- 15 frontend tests passing;
+- 7 reconciliation benchmark gate tests passing;
+- 32 AI quality gate tests passing;
+- passing security checks and frontend production build.
 
----
+These are recorded milestone results; they are not represented as freshly executed by this documentation change.
 
-## [0.1.0] — Pre-build baseline
+### Production work still pending
+- external security review;
+- staging/production CI/CD;
+- observability and operational monitoring;
+- backup/restore validation;
+- production AI provider and cost controls;
+- direct external integrations and production deployment.
 
-### Status
-Planning / architecture only.
+## Historical baseline
 
-### Source
-Based on the uploaded "AI Micro-SaaS for CA/Tax Firms" proposal and subsequent product/market research.
+The original pre-build product, architecture, and implementation specifications are preserved under:
 
----
+```text
+docs/history/specifications/
+```
 
-# Changelog Rules
+Historical audits are preserved under:
 
-For each release, record:
+```text
+docs/history/audits/
+```
 
-- date;
-- added;
-- changed;
-- fixed;
-- security;
-- known limitations;
-- migration notes where relevant.
+See [docs/history/README.md](docs/history/README.md) for interpretation rules.
