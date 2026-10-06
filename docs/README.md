@@ -4,7 +4,7 @@
 
 | Document | Purpose |
 |---|---|
-| [Architecture](ARCHITECTURE.md) | Current system boundaries and workflow |
+| [Architecture](ARCHITECTURE.md) | Current system boundaries, workflow, and repository architecture map |
 | [Development](DEVELOPMENT.md) | Local setup, tests, migrations, frontend |
 | [Evaluation](EVALUATION.md) | Reconciliation and AI quality verification |
 | [Security](SECURITY.md) | Tenant isolation, auth, AI safety, pilot limitations |
